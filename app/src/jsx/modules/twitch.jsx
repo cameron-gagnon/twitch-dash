@@ -1,14 +1,15 @@
 import React from 'react';
 
-const EMBED_URL = 'https://embed.twitch.tv/embed/v1.js';
+const EMBED_URL = 'https://player.twitch.tv/js/embed/v1.js';
 
-class TwitchModule extends React.Component {
+class TwitchVideo extends React.Component {
     componentDidMount() {
-        let embed;
+        let player;
         const script = document.createElement('script');
         script.setAttribute('src', EMBED_URL)
         script.addEventListener('load', () => {
-            embed = new window.Twitch.Embed(this.props.targetID, { ...this.props });
+            player = new window.Twitch.Player(this.props.targetID, { ...this.props });
+            player.setVolume(0.0);
         });
 
         document.body.appendChild(script);
@@ -23,4 +24,4 @@ class TwitchModule extends React.Component {
     }
 }
 
-export default TwitchModule;
+export default TwitchVideo;
