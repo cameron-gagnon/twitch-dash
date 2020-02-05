@@ -1,25 +1,23 @@
 import React from 'react';
-import { Button, Icon} from 'semantic-ui-react';
+import { Icon } from 'semantic-ui-react';
 
 class SoundBoardModule extends React.Component {
+    renderButton(text, size, icon, uiClasses) {
+        return (
+            <button size={size} icon={icon} class={uiClasses}>
+                <Icon name={icon} />
+                {text}
+            </button>
+        );
+    }
     render() {
+        const size = 'huge';
+        const uiClasses = 'ui purple button huge';
         return <div>
-            <Button size="huge" icon='world'>
-                <Icon name="itunes note"/>
-                Air Horn
-            </Button>
-            <Button size="huge" icon='world'>
-                <Icon name="itunes note"/>
-                Hits
-            </Button>
-            <Button size="huge" icon='world'>
-                <Icon name="itunes note"/>
-                Hot
-            </Button>
-            <Button size="huge" icon='world'>
-                <Icon name="itunes note"/>
-                Ding
-            </Button>
+            { this.renderButton('Air horn', size, 'music note', uiClasses) }
+            { this.renderButton('Ding', size, 'music note', uiClasses) }
+            { this.renderButton('Hot', size, 'music note', uiClasses) }
+            { this.renderButton('Hits', size, 'music note', uiClasses) }
         </div>;
     }
 }

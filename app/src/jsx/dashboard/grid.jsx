@@ -6,15 +6,17 @@ import TwitchChat from '../modules/twitchChat.jsx';
 // import StreamLabsModule from '../modules/streamLabs.jsx';
 import SoundBoardModule from '../modules/soundBoard.jsx';
 import DashboardHeader from './dashboardHeader.jsx';
+import LightBoard from './lightboard.jsx';
 
 //import { Header } from 'semantic-ui-react';
 
 class DashboardGrid extends React.Component {
     layout() {
         return [
+            {i: 'soundBoardMod', x:0, y:0, w:8, h:4, static: true },
+            {i: 'lightBoard', x:0, y:5, w:8, h: 5 },
             {i: 'twitchVideo', x:10, y:0, w:1, h:7 },
             {i: 'twitchChat',  x:10, y:15, w:2, h:4 },
-            {i: 'soundBoardMod', x:0, y:0, w:8, h:4 },
             {i: 'streamLabsMod', x:4, y:0, w:1, h:2 }
         ];
     }
@@ -39,6 +41,9 @@ class DashboardGrid extends React.Component {
                     </div> */}
                     <div key="soundBoardMod">
                         <SoundBoardModule/>
+                    </div>
+                    <div key="lightBoard">
+                        <LightBoard/>
                     </div>
                 </GridLayout>
             </React.Fragment>
