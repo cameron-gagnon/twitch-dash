@@ -5,7 +5,7 @@ class TwitchChat extends React.Component {
         return (
             <iframe
                 title="twitchChat"
-                frameborder="0"
+                frameBorder="0"
                 scrolling="yes"
                 id="stroopc"
                 src="https://www.twitch.tv/embed/stroopc/chat"

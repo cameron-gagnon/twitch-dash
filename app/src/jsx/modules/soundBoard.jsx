@@ -2,22 +2,35 @@ import React from 'react';
 import { Icon } from 'semantic-ui-react';
 
 class SoundBoardModule extends React.Component {
-    renderButton(text, size, icon, uiClasses) {
-        return (
-            <button size={size} icon={icon} class={uiClasses}>
-                <Icon name={icon} />
-                {text}
-            </button>
-        );
+
+    size = 'huge';
+    uiclasses = 'ui purple button huge';
+
+    // name, size, icon, class
+    sfxs = [
+        { name: 'air horn', size: this.size, icon: 'music', uiClass: this.uiclasses, audio: new Audio("/soundboard/air_horn.mp3")},
+        { name: 'ding', size: this.size, icon: 'music', uiClass: this.uiclasses, audio: new Audio("/soundboard/ding.mp3")},
+        { name: 'hot', size: this.size, icon: 'music', uiClass: this.uiclasses, audio: new Audio("/soundboard/hot.mp3")},
+        { name: 'hits', size: this.size, icon: 'music', uiClass: this.uiclasses, audio: new Audio("/soundboard/hits.mp3")}
+    ];
+
+    populateButtons() {
+        return this.sfxs.map((sfx, i) => 
+                <button onClick={ sfx.audio.play } size={sfx.size} icon={sfx.icon} className={sfx.uiClass} key={sfx.name}>
+                    <Icon name={sfx.icon} />
+                    {sfx.name}
+                </button>
+            )
     }
+
+    constructor(props) {
+        super(props);
+        this.state.buttons = this.populateButtons();
+    }
+
     render() {
-        const size = 'huge';
-        const uiClasses = 'ui purple button huge';
         return <div>
-            { this.renderButton('Air horn', size, 'music note', uiClasses) }
-            { this.renderButton('Ding', size, 'music note', uiClasses) }
-            { this.renderButton('Hot', size, 'music note', uiClasses) }
-            { this.renderButton('Hits', size, 'music note', uiClasses) }
+            { this.state.buttons }
         </div>;
     }
 }
