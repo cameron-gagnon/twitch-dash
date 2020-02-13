@@ -1,6 +1,6 @@
 import React from 'react';
 
-import './App.css';
+import './styles/css/App.css';
 import DashboardGrid from './jsx/dashboard/grid.jsx';
 
 function App() {

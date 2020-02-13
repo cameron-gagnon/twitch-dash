@@ -1,3 +1,12 @@
+.light-theme {
+  background: white;
+  color: black;
+}
+
+.dark-theme {
+  background-color: rgb(24, 26, 27);
+  color: rgba(232, 230, 227, 0.87);
+}
 .App {
   text-align: center;
 }
