@@ -1,11 +1,12 @@
 import React from 'react';
+import { Button } from 'semantic-ui-react';
 
 function Toggle(props) {
 
     return (
-        <button onClick={props.toggleTheme}>
+        <Button className="purple" onClick={props.toggleTheme}>
             Toggle Light/Dark theme
-        </button>
+        </Button>
     );
 };
 

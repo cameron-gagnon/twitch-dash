@@ -16,11 +16,11 @@ import Toggle from '../components/toggle.jsx';
 function DashboardGrid() {
     const [theme, toggleTheme] = DarkMode();
     const layout = [
-        {i: 'soundBoardMod', x:0, y:0, w:8, h:4, static: true },
-        {i: 'lightBoard', x:0, y:5, w:8, h: 5 },
-        {i: 'twitchVideo', x:10, y:0, w:1, h:7 },
-        {i: 'twitchChat',  x:10, y:15, w:2, h:4 },
-        {i: 'streamLabsMod', x:4, y:0, w:1, h:2, static: true }
+        {i: 'streamLabsMod', x:0, y:0, w:10, h:4, static: true },
+        {i: 'soundBoardMod', x:0, y:6, w:8, h:4, static: true },
+        {i: 'lightBoard', x:0, y:14, w:8, h: 5 },
+        {i: 'twitchVideo', x:10, y:10, w:1, h:7 },
+        {i: 'twitchChat',  x:10, y:25, w:2, h:4 }
     ];
 
     return (
