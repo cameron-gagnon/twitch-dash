@@ -1,28 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-class UrlInput extends React.Component {
+function UrlInput(props) {
+    const [url, setUrl] = useState(props.defaultValue);
 
-    // TODO: Connect to website by default
-    // componentDidMount() {
-    //     if (this.props.submitOnLoad) {
-    //         console.log('Submitting form on load')
-    //         const submitButton = document.getElementById('urlFormSubmitButton');
-    //         console.log(`SubmitButton: ${submitButton.form}`);
-    //     }
-    // }
-
-
-
-    render () {
-        return (
-            <form onSubmit={this.props.onSubmit} id='urlForm'>
-                <label>
-                    <input name="urlInput" defaultValue={this.props.defaultValue} type="text"/>
-                </label>
-                <input id='urlFormSubmitButton' type="submit" value="Connect"/>
-            </form>
-        )
-    }
+    return (
+        <div className="ui action input">
+            <input onChange={event => setUrl(event.target.value)} type="text" defaultValue={url}/>
+            <button onClick={(e)=>{e.preventDefault(); props.onSubmit(url)}} className="ui button">
+                Connect
+            </button>
+        </div>
+    )
 }
 
 export default UrlInput;

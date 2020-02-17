@@ -3,6 +3,7 @@ import SockJS from 'sockjs-client';
 
 import Scenes from '../components/scenes';
 import UrlInput from '../components/urlInput';
+import StreamingStatus from '../components/streaming';
 
 class StreamLabsModule extends React.Component {
 
@@ -14,19 +15,20 @@ class StreamLabsModule extends React.Component {
             audioSources: [],
             sceneItems: [],
             sources: [],
-            connectionStatus: 'disconnected'
+            connectionStatus: 'disconnected',
+            isStreaming: false,
+            // should only go from false -> true once per page load
+            initialized: false
         };
 
         // non-rendered state data
         this.nextRequestId = 1;
-        this.connect = this.connect.bind(this);
         this.requests = {};
         this.subscriptions = {};
+
     }
 
-    connect(e) {
-        e.preventDefault();
-        let url = e.target.elements["urlInput"].value;
+    connect(url) {
         console.log(`connecting to: ${url}`);
         this.socket = new SockJS(url);
 
@@ -41,12 +43,13 @@ class StreamLabsModule extends React.Component {
 
         this.socket.onclose = (e) => {
             this.connectionStatus = 'disconnected';
-            alert(`Disconnected from: ${this.url} due to ${e.reason}`);
+            alert(`Disconnected due to: ${e.reason}`);
             console.log('Socket disconnecting', e);
         };
     }
 
     onConnectionHandler() {
+        // this.authorizeConnection();
         this.setState({connectionStatus: 'connected'});
         this.request('ScenesService', 'getScenes').then(scenes => {
             scenes.forEach(scene => this.addScene(scene));
@@ -60,6 +63,18 @@ class StreamLabsModule extends React.Component {
         this.subscribe('ScenesService', 'sceneSwitched', (activeScene) => {
             // this.onSceneSwitchedHandler(activeScene);
             this.setActiveSceneFromId(activeScene.id);
+        });
+
+        this.subscribe('StreamingService', 'streamingStatusChange', (streamingStatus) => {
+            // streamingStatus can be one of [starting, live, ending, offline];
+            this.setStreamingStatus(streamingStatus);
+        });
+        this.setState({initialized: true});
+    }
+
+    authorizeConnection() {
+        this.request('TcpServerService', 'auth', {args: [this.config.token]}).then(response => {
+            console.log('Authenticated with SLOBS!');
         });
     }
 
@@ -145,15 +160,42 @@ class StreamLabsModule extends React.Component {
         });
     }
 
-    // should be bound to the scene context
     switchScene(scene) {
         console.log(`Switching scene to ${scene.name}`);
         this.request('ScenesService', 'makeSceneActive', scene.id);
     }
 
+    setStreamingStatus(streamingStatus) {
+        console.log(`Streaming status change: ${streamingStatus}`);
+        switch(streamingStatus) {
+            case 'starting':
+            case 'live':
+                this.setState({ isStreaming: true });
+                break;
+            case 'ending':
+            case 'offline':
+                this.setState({ isStreaming: false });
+                break;
+            default:
+                console.error(`Error: got unknown streaming status: ${streamingStatus}`);
+                break;
+        }
+    }
+
+    toggleStreamingStatus(streamingStatus) {
+        console.log(`Toggled streaming status change. Original status is: ${this.state.isStreaming}`);
+        this.request('StreamingService', 'toggleStreaming');
+    }
+
     render() {
         return <div>
-            <UrlInput onSubmit={this.connect} submitOnLoad={true} defaultValue="http://127.0.0.1:59650/api"/>
+            <UrlInput onSubmit={this.connect.bind(this)} submitOnLoad={true} defaultValue="http://127.0.0.1:59650/api"/>
+
+            <StreamingStatus
+                initialized={this.state.initialized}
+                isStreaming={this.state.isStreaming}
+                callback={this.toggleStreamingStatus.bind(this)}/>
+
             <Scenes scenes={this.state.scenes}></Scenes>
             {/*<Sources sources={sources}></Sources> */}
         </div>;
