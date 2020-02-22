@@ -1,9 +1,9 @@
 import React from 'react';
 import SockJS from 'sockjs-client';
 
-import Scenes from '../components/scenes';
-import UrlInput from '../components/urlInput';
-import StreamingStatus from '../components/streaming';
+import Scenes from 'jsx/components/scenes';
+import UrlInput from 'jsx/components/urlInput';
+import StreamingStatus from 'jsx/components/streaming';
 
 class StreamLabsModule extends React.Component {
 
@@ -17,7 +17,6 @@ class StreamLabsModule extends React.Component {
             sources: [],
             connectionStatus: 'disconnected',
             isStreaming: false,
-            // should only go from false -> true once per page load
             initialized: false
         };
 
@@ -45,6 +44,10 @@ class StreamLabsModule extends React.Component {
             this.connectionStatus = 'disconnected';
             alert(`Disconnected due to: ${e.reason}`);
             console.log('Socket disconnecting', e);
+            this.setState({
+                scenes: [],
+                initialized: false
+            });
         };
     }
 

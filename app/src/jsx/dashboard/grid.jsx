@@ -1,15 +1,15 @@
 import React from 'react';
 import GridLayout from 'react-grid-layout';
 
-import TwitchVideo from '../modules/twitch.jsx';
-import TwitchChat from '../modules/twitchChat.jsx';
+import TwitchVideo from 'jsx/modules/twitch.jsx';
+import TwitchChat from 'jsx/modules/twitchChat.jsx';
 // import StreamLabsModule from '../modules/streamLabs.jsx';
-import SoundBoardModule from '../modules/soundBoard.jsx';
-import StreamLabsModule from '../modules/streamLabs.jsx';
+import SoundBoardModule from 'jsx/modules/soundBoard.jsx';
+import StreamLabsModule from 'jsx/modules/streamLabs.jsx';
 import DashboardHeader from './dashboardHeader.jsx';
 import LightBoard from './lightboard.jsx';
-import DarkMode from '../themes/darkMode.jsx';
-import Toggle from '../components/toggle.jsx';
+import DarkMode from 'jsx/themes/darkMode.jsx';
+import Toggle from 'jsx/components/toggle.jsx';
 
 //import { Header } from 'semantic-ui-react';
 
