@@ -1,5 +1,10 @@
 # To run
 
+### In VSCode
+
+Trigger the hotkey for a build and it will automatically start the frontend
+and backend servers with hot reloading for both
+
 ### `yarn dev`
 
 Runs the create-react-app and backend API. Necessary to use this app not on

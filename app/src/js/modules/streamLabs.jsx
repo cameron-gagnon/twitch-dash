@@ -1,9 +1,10 @@
 import React from 'react';
 import SockJS from 'sockjs-client';
 
-import Scenes from 'jsx/components/scenes';
-import UrlInput from 'jsx/components/urlInput';
-import StreamingStatus from 'jsx/components/streaming';
+import Scenes from 'js/components/scenes';
+import ValueInput from 'js/components/valueInput';
+import StreamingStatus from 'js/components/streaming';
+import { urls } from 'js/services/backend';
 
 class StreamLabsModule extends React.Component {
 
@@ -17,14 +18,32 @@ class StreamLabsModule extends React.Component {
             sources: [],
             connectionStatus: 'disconnected',
             isStreaming: false,
-            initialized: false
+            initialized: false,
+            streamlabsToken: ''
         };
 
         // non-rendered state data
         this.nextRequestId = 1;
         this.requests = {};
         this.subscriptions = {};
+        this.streamlabsUrl = "http://127.0.0.1:59650/api";
+    }
 
+    componentDidMount() {
+        const url = urls.token+'?name=streamlabs';
+        fetch(url, {
+            credentials: 'include',
+        })
+        .then(res => res.json())
+        .then(
+        (result) => {
+            this.setState({
+                streamlabsToken: result.token
+            });
+        },
+        (error) => {
+            console.error(`Error from request to ${url}: ${error}`);
+        });
     }
 
     connect(url) {
@@ -52,7 +71,7 @@ class StreamLabsModule extends React.Component {
     }
 
     onConnectionHandler() {
-        // this.authorizeConnection();
+        this.authorizeConnection();
         this.setState({connectionStatus: 'connected'});
         this.request('ScenesService', 'getScenes').then(scenes => {
             scenes.forEach(scene => this.addScene(scene));
@@ -76,7 +95,8 @@ class StreamLabsModule extends React.Component {
     }
 
     authorizeConnection() {
-        this.request('TcpServerService', 'auth', {args: [this.config.token]}).then(response => {
+        console.log(`Streamlabs token is: ${this.state.streamlabsToken}`);
+        this.request('TcpServerService', 'auth', this.state.streamlabsToken).then(response => {
             console.log('Authenticated with SLOBS!');
         });
     }
@@ -126,6 +146,7 @@ class StreamLabsModule extends React.Component {
             method: methodName,
             params: { resource: resourceId, args }
         };
+        console.log(`RequestBody: ${JSON.stringify(requestBody)}`);
         return this.sendMessage(requestBody);
     }
 
@@ -192,7 +213,11 @@ class StreamLabsModule extends React.Component {
 
     render() {
         return <div>
-            <UrlInput onSubmit={this.connect.bind(this)} submitOnLoad={true} defaultValue="http://127.0.0.1:59650/api"/>
+            <ValueInput
+                onSubmit={this.connect.bind(this)}
+                defaultValue={this.streamlabsUrl}
+                text='Connect'
+            />
 
             <StreamingStatus
                 initialized={this.state.initialized}

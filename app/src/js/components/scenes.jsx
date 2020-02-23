@@ -1,5 +1,5 @@
 import React from 'react';
-import Scene from '../components/scene';
+import Scene from './scene';
 
 function Scenes(props) {
 
