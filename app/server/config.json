@@ -1,0 +1,9 @@
+{
+    "express": {
+        "cookie_secret": "",
+        "login_secret": ""
+    },
+    "token": {
+        "streamlabs": ""
+    }
+}
