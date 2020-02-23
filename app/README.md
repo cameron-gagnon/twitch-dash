@@ -1,8 +1,26 @@
+# To run
+
+### `yarn dev`
+
+Runs the create-react-app and backend API. Necessary to use this app not on
+localhost with streamlabs. See the `dev` entry in the `app`'s `package.json`
+
+
+## Configuration
+
+* `jsconfig.json` - controls absolute imports
+* `src/package.json['proxy']` - proxies unknown location requests to this address.
+This is how the backend is hit
+* `app/server/*` - holds backend code
+
+
+--- STOCK CREATE-REACT-APP DOCUMENTATION BELOW HERE ---
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
 In the project directory, you can run:
+
 
 ### `yarn start`
 

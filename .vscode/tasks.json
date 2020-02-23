@@ -5,9 +5,24 @@
     "echoCommand": true,
     "tasks": [
         {
-            "label": "rungo",
+            "label": "frontend",
             "type": "shell",
-            "command": "yarn --cwd app/ start",
+            "command": "yarn start",
+            "options": {
+                "cwd": "${workspaceRoot}/app/src"
+            }
+        },
+        {
+            "label": "backend",
+            "type": "shell",
+            "command": "yarn start",
+            "options": {
+                "cwd": "${workspaceRoot}/app/server"
+            }
+        },
+        {
+            "label": "build",
+            "dependsOn": ["frontend", "backend"],
             "group": {
                 "kind": "build",
                 "isDefault": true
