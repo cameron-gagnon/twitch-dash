@@ -19,6 +19,12 @@ This is how the backend is hit
 * `app/server/*` - holds backend code
 
 
+Login screen:
+![login screen](../pictures/twitch_dash_login_v1.PNG)
+
+Twitch Dash:
+![Twitch dashboard](../pictures/twitch_dash_v1.PNG)
+
 --- STOCK CREATE-REACT-APP DOCUMENTATION BELOW HERE ---
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
