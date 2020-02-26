@@ -8,7 +8,7 @@ class TwitchChat extends React.Component {
                 frameBorder="0"
                 scrolling="yes"
                 id="stroopc"
-                src="https://www.twitch.tv/embed/stroopc/chat"
+                src="https://www.twitch.tv/embed/stroopc/chat?darkpopout"
                 height="400"
                 width="370"
             >

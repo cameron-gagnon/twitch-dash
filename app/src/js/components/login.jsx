@@ -46,7 +46,7 @@ class Login extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className="flex-centered-container">
                 <ValueInput
                     onSubmit={this.submit.bind(this)}
                     text='Login'

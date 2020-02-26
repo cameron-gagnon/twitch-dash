@@ -12,7 +12,7 @@ function ValueInput(props) {
             />
             <button
                 onClick={(e)=>{e.preventDefault(); props.onSubmit(value)}}
-                className="ui button"
+                className="ui button inverted massive"
             >
                {props.text} 
             </button>

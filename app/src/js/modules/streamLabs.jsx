@@ -2,8 +2,8 @@ import React from 'react';
 import SockJS from 'sockjs-client';
 
 import Scenes from 'js/components/scenes';
-import ValueInput from 'js/components/valueInput';
-import StreamingStatus from 'js/components/streaming';
+import UrlDropdown from 'js/components/urlDropdown';
+import StreamingStatus from 'js/components/streamingStatus';
 import { urls } from 'js/services/backend';
 
 class StreamLabsModule extends React.Component {
@@ -16,7 +16,7 @@ class StreamLabsModule extends React.Component {
             audioSources: [],
             sceneItems: [],
             sources: [],
-            connectionStatus: 'disconnected',
+            connectioned: false,
             isStreaming: false,
             initialized: false,
             streamlabsToken: ''
@@ -26,7 +26,7 @@ class StreamLabsModule extends React.Component {
         this.nextRequestId = 1;
         this.requests = {};
         this.subscriptions = {};
-        this.streamlabsUrl = "http://127.0.0.1:59650/api";
+        this.streamlabsUrls = ["http://127.0.0.1:59650/api","http://10.0.0.125:59650/api"];
     }
 
     componentDidMount() {
@@ -60,19 +60,19 @@ class StreamLabsModule extends React.Component {
         };
 
         this.socket.onclose = (e) => {
-            this.connectionStatus = 'disconnected';
             alert(`Disconnected due to: ${e.reason}`);
             console.log('Socket disconnecting', e);
             this.setState({
                 scenes: [],
-                initialized: false
+                initialized: false,
+                connected: false
             });
         };
     }
 
     onConnectionHandler() {
         this.authorizeConnection();
-        this.setState({connectionStatus: 'connected'});
+        this.setState({connected: true});
         this.request('ScenesService', 'getScenes').then(scenes => {
             scenes.forEach(scene => this.addScene(scene));
         });
@@ -213,17 +213,23 @@ class StreamLabsModule extends React.Component {
 
     render() {
         return <div>
-            <ValueInput
-                onSubmit={this.connect.bind(this)}
-                defaultValue={this.streamlabsUrl}
-                text='Connect'
-            />
-
-            <StreamingStatus
-                initialized={this.state.initialized}
-                isStreaming={this.state.isStreaming}
-                callback={this.toggleStreamingStatus.bind(this)}/>
-
+            <div className="ui two column centered grid">
+                <div className="right aligned column">
+                    <UrlDropdown
+                        connected={this.state.connected}
+                        onSubmit={this.connect.bind(this)}
+                        values={this.streamlabsUrls}
+                        text='Connect'
+                    />
+                </div>
+                <div className="column">
+                    <StreamingStatus
+                        initialized={this.state.initialized}
+                        isStreaming={this.state.isStreaming}
+                        callback={this.toggleStreamingStatus.bind(this)}
+                    />
+                </div>
+            </div>
             <Scenes scenes={this.state.scenes}></Scenes>
             {/*<Sources sources={sources}></Sources> */}
         </div>;

@@ -1,52 +1,30 @@
+/* dark mode options copied from my Chrome extension */
+html {
+    background-color: #181a1b !important;
+}
+html, body, input, textarea, select, button {
+    background-color: #181a1b;
+}
+html, body, input, textarea, select, button {
+    border-color: #575757;
+    color: #e8e6e3
+}
+/* end dark mode options */
+
+.square {
+  height: 7em;
+  width: 7em;
+  word-break: break-all;
+}
+
+.flex-centered-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .error {
   color: red;
   font-weight: bold;
-}
-
-.light-theme {
-  background: white;
-  color: black;
-}
-
-.dark-theme {
-  background-color: rgb(24, 26, 27);
-  color: rgba(232, 230, 227, 0.87);
-}
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }

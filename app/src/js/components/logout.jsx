@@ -16,7 +16,7 @@ function Logout (props){
     }
 
     return (
-        <Button className='ui purple huge' onClick={ logout }>
+        <Button className="inverted" onClick={ logout }>
             Logout
         </Button>
     )
