@@ -1,29 +1,19 @@
-FROM ubuntu:latest
+FROM mhart/alpine-node:13 AS builder
 
-RUN apt -yqq update
-RUN apt -yqq install curl gnupg
+WORKDIR /app
 
-#RUN curl https://github.com/Yelp/dumb-init/releases/download/v1.2.2/dumb-init_1.2.2_x86_64 -o /usr/local/bin/dumb-init
-#RUN chmod +x /usr/local/bin/dumb-init
+COPY package.json yarn.lock ./
 
-#ENTRYPOINT ["/usr/local/bin/dumb-init", "--"]
-
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
-RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
-
-RUN apt -yqq update
-
-RUN apt -yqq install yarn
-
-WORKDIR /usr/src/twitch-dash
+RUN yarn install --pure-lockfile --production && \
+    yarn cache clean
 
 COPY . .
 
-RUN yarn install --pure-lockfile --production
-#RUN yarn build
+RUN yarn build
 
-ARG PORT=80
-EXPOSE $PORT
+FROM nginx:mainline-alpine
 
-#CMD ["serve", "-s", $PORT]
-CMD ["yarn", "start"]
+EXPOSE 80
+COPY --from=builder /app/build /usr/share/nginx/html
+
+CMD ["nginx", "-g", "daemon off;"]
