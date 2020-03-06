@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+  twitch-dash-web:
+    build: ./app
+    expose:
+      - 80
+    ports:
+      - 8888:80
+    links:
+      - twitch-dash-api
+  twitch-dash-api:
+    build: ./server
+    expose:
+      - 4000
+    ports:
+      - 4000:4000

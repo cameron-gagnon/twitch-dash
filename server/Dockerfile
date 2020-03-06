@@ -8,11 +8,6 @@ RUN yarn install --pure-lockfile --production
 
 COPY . .
 
-RUN yarn build
+EXPOSE 4000
 
-FROM nginx:mainline-alpine
-
-EXPOSE 80
-COPY --from=builder /app/build /usr/share/nginx/html
-
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["node", "server.js"]
