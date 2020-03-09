@@ -18,7 +18,6 @@
     "semantic-ui-react": "^0.88.2",
     "serve": "^11.3.0"
   },
-  "proxy": "http://twitch-dash-api:4000",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",

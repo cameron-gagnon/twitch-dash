@@ -14,5 +14,6 @@ FROM nginx:mainline-alpine
 
 EXPOSE 80
 COPY --from=builder /app/build /usr/share/nginx/html
+COPY ./nginx/nginx.conf /etc/nginx/conf.d/default.conf
 
 CMD ["nginx", "-g", "daemon off;"]
