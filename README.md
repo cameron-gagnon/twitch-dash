@@ -15,8 +15,17 @@ localhost with streamlabs. See the `dev` entry in the `app`'s `package.json`
 
 * `jsconfig.json` - controls absolute imports
 * `src/package.json['proxy']` - proxies unknown location requests to this address.
-This is how the backend is hit
-* `app/server/*` - holds backend code
+This is how the backend is hit in development (not production)
+* `server/*` - holds backend api code
+
+### Production build
+
+```
+$ cd twitch-dash
+$ # FILL IN SECRETS IN config.json
+$ docker-compose up
+```
+
 
 
 Login screen:
